@@ -1,5 +1,5 @@
 from django.contrib.contenttypes.models import ContentType
-from django.db.models.signals import post_save, post_init, pre_save
+from django.db.models.signals import post_save, post_init, pre_save, m2m_changed
 from .models import Comment, ModelWithAuthor, LikeAble, Like, Post
 
 
@@ -15,8 +15,6 @@ def post_presave(instance, created=False, *args, **kwargs):
 
     instance.comments_count = instance.comments.count()
     instance.likes_count = instance.likes.count()
-    Like.objects.filter()
-    print(instance.id)
 
 
 def post_postsave(instance, created=False, *args, **kwargs):
