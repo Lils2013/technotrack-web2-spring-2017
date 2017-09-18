@@ -8,7 +8,7 @@ from django.contrib.contenttypes.models import ContentType
 
 class User(AbstractUser):
 
-    objects_count = models.IntegerField(default=0)
+    pass
 
 
 class ModelWithDates(models.Model):
@@ -53,15 +53,40 @@ class WatchableModel(models.Model):
         abstract = True
 
 
-class Post(ModelWithAuthor, ModelWithDates, LikeAble, WatchableModel):
-
-    title = models.CharField(max_length=255)
-    comments_count = models.IntegerField(default=0)
-
-
 class Comment(ModelWithAuthor, ModelWithDates, LikeAble):
 
-    post = models.ForeignKey(Post)
-    text = models.TextField()
-    text_was = None
-    edited_count = models.IntegerField()
+    text = models.CharField(max_length=255)
+    content_type = models.ForeignKey(ContentType)
+    object_id = models.PositiveIntegerField()
+    object = GenericForeignKey('content_type', 'object_id')
+
+
+class CommentAble(models.Model):
+
+    comments = GenericRelation(Comment, object_id_field='object_id', content_type_field='content_type')
+    comments_count = models.IntegerField(default=0)
+
+    class Meta:
+        abstract = True
+
+
+class Post(ModelWithAuthor, ModelWithDates, LikeAble, CommentAble):
+
+    prev_comments_count = None
+    prev_likes_count = None
+    text = models.CharField(max_length=255)
+
+
+class Subscription(models.Model):
+
+    source = models.ForeignKey(User, related_name = 'source')
+    target = models.ForeignKey(User, related_name = 'target')
+
+
+class Event(ModelWithAuthor):
+
+    created = models.DateTimeField(auto_now_add=True)
+    content_type = models.ForeignKey(ContentType)
+    object_id = models.PositiveIntegerField()
+    object = GenericForeignKey('content_type', 'object_id')
+    type = models.IntegerField()

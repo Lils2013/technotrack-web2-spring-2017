@@ -18,7 +18,7 @@ from ConfigParser import ConfigParser
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 config = ConfigParser()
-config.read(os.path.join(BASE_DIR, '../django.conf'))
+config.read(os.path.join(BASE_DIR, 'django.conf'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
@@ -86,11 +86,8 @@ WSGI_APPLICATION = 'application.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': config.get('db', 'NAME'),
-        'USER': config.get('db', 'USER'),
-        'PASSWORD': config.get('db', 'PASSWORD'),
-        'HOST': 'localhost',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'yourdatabasename.db'),
     }
 }
 
