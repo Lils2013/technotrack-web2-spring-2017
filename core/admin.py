@@ -40,25 +40,11 @@ class PostAdmin(LikeAndCommentAbleAdmin):
 
     readonly_fields = 'likes_count', 'comments_count'
 
-    def save_model(self, request, obj, form, change):
-        pass
-
-    def save_formset(self, request, form, formset, change):
-        formset.save()
-        form.instance.save()
-
 
 @admin.register(Comment)
 class CommentAdmin(LikeAbleAdmin):
 
     readonly_fields = 'likes_count',
-
-    def save_model(self, request, obj, form, change):
-        pass
-
-    def save_formset(self, request, form, formset, change):
-        formset.save()
-        form.instance.save()
 
 
 @admin.register(Subscription)
@@ -69,5 +55,11 @@ class CommentAdmin(admin.ModelAdmin):
 
 @admin.register(Event)
 class EventAdmin(admin.ModelAdmin):
+
+    pass
+
+
+@admin.register(Like)
+class LikeAdmin(admin.ModelAdmin):
 
     pass

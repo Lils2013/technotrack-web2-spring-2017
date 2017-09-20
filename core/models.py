@@ -7,12 +7,10 @@ from django.contrib.contenttypes.models import ContentType
 
 
 class User(AbstractUser):
-
     pass
 
 
 class ModelWithDates(models.Model):
-
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
@@ -21,7 +19,6 @@ class ModelWithDates(models.Model):
 
 
 class ModelWithAuthor(models.Model):
-
     author = models.ForeignKey(User)
 
     class Meta:
@@ -29,14 +26,12 @@ class ModelWithAuthor(models.Model):
 
 
 class Like(ModelWithDates, ModelWithAuthor):
-
     content_type = models.ForeignKey(ContentType)
     object_id = models.PositiveIntegerField()
     object = GenericForeignKey('content_type', 'object_id')
 
 
 class LikeAble(models.Model):
-
     likes = GenericRelation(Like, object_id_field='object_id', content_type_field='content_type')
     likes_count = models.IntegerField(default=0)
 
@@ -45,7 +40,6 @@ class LikeAble(models.Model):
 
 
 class WatchableModel(models.Model):
-
     def get_title_for_event(self, eventtype):
         raise NotImplementedError
 
@@ -54,7 +48,6 @@ class WatchableModel(models.Model):
 
 
 class Comment(ModelWithAuthor, ModelWithDates, LikeAble):
-
     text = models.CharField(max_length=255)
     content_type = models.ForeignKey(ContentType)
     object_id = models.PositiveIntegerField()
@@ -62,7 +55,6 @@ class Comment(ModelWithAuthor, ModelWithDates, LikeAble):
 
 
 class CommentAble(models.Model):
-
     comments = GenericRelation(Comment, object_id_field='object_id', content_type_field='content_type')
     comments_count = models.IntegerField(default=0)
 
@@ -70,23 +62,23 @@ class CommentAble(models.Model):
         abstract = True
 
 
-class Post(ModelWithAuthor, ModelWithDates, LikeAble, CommentAble):
-
-    prev_comments_count = None
-    prev_likes_count = None
+class Post(ModelWithAuthor, ModelWithDates, LikeAble, CommentAble, WatchableModel):
     text = models.CharField(max_length=255)
 
-
-class Subscription(models.Model):
-
-    source = models.ForeignKey(User, related_name = 'source')
-    target = models.ForeignKey(User, related_name = 'target')
+    def get_title_for_event(self, eventtype):
+        return eventtype.text
 
 
-class Event(ModelWithAuthor):
+class Subscription(ModelWithDates):
+    source = models.ForeignKey(User, related_name='source')
+    target = models.ForeignKey(User, related_name='target')
 
-    created = models.DateTimeField(auto_now_add=True)
+    class Meta:
+        unique_together = ('source', 'target',)
+
+
+class Event(ModelWithAuthor, ModelWithDates):
+    title = models.CharField(max_length=255)
     content_type = models.ForeignKey(ContentType)
     object_id = models.PositiveIntegerField()
     object = GenericForeignKey('content_type', 'object_id')
-    type = models.IntegerField()
