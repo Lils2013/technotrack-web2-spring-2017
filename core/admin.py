@@ -38,28 +38,28 @@ class LikeAbleAdmin(admin.ModelAdmin):
 @admin.register(Post)
 class PostAdmin(LikeAndCommentAbleAdmin):
 
-    readonly_fields = 'likes_count', 'comments_count'
+    readonly_fields = 'likes_count', 'comments_count', 'created', 'updated'
 
 
 @admin.register(Comment)
 class CommentAdmin(LikeAbleAdmin):
 
-    readonly_fields = 'likes_count',
+    readonly_fields = 'likes_count', 'created', 'updated'
 
 
 @admin.register(Subscription)
 class CommentAdmin(admin.ModelAdmin):
 
-    pass
+    readonly_fields = 'created', 'updated'
 
 
 @admin.register(Event)
 class EventAdmin(admin.ModelAdmin):
 
-    pass
+    readonly_fields = 'created', 'updated'
 
 
 @admin.register(Like)
 class LikeAdmin(admin.ModelAdmin):
 
-    pass
+    readonly_fields = 'created', 'updated'
