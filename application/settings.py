@@ -41,6 +41,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'debug_toolbar',
     'core.apps.CoreConfig',
+    'comments.apps.CommentsConfig',
+    'events.apps.EventsConfig',
+    'likes.apps.LikesConfig',
+    'posts.apps.PostsConfig',
+    'subscriptions.apps.SubscriptionsConfig',
 ]
 
 MIDDLEWARE = [
