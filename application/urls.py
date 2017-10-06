@@ -16,13 +16,21 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 from django.conf import settings
+from rest_framework.routers import DefaultRouter
+from core.views import PostViewSet, UserViewSet
+from rest_framework.authtoken import views
 
+router = DefaultRouter()
+router.register('posts',PostViewSet)
+router.register('users',UserViewSet)
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^api/v1/', include(router.urls)),
+    url(r'^api/token-auth/', views.obtain_auth_token),
 ]
 
 if settings.DEBUG:
     import debug_toolbar
     urlpatterns += [
-        url(r'^__debug__/', include(debug_toolbar.urls)),
+        url(r'^__debug__/', include(debug_toolbar.urls))
     ]
