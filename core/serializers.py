@@ -10,11 +10,12 @@ class PostSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Post
-        fields = '__all__'
+        fields = ('id', 'author', 'likes_count', 'comments_count', 'created', 'text')
+        #    fields = '__all__'
 
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id','last_login','username','first_name','last_name','email','date_joined','is_superuser')
+        fields = ('id', 'last_login', 'username', 'first_name', 'last_name', 'email', 'date_joined', 'is_superuser')
         # fields = '__all__'
