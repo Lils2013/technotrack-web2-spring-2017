@@ -46,8 +46,9 @@ INSTALLED_APPS = [
     'likes.apps.LikesConfig',
     'posts.apps.PostsConfig',
     'subscriptions.apps.SubscriptionsConfig',
+    'social_django',
     'rest_framework',
-    "rest_framework.authtoken",
+    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
@@ -137,3 +138,13 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
     ),
 }
+
+AUTHENTICATION_BACKENDS = {
+    'social_core.backends.vk.VKOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+}
+
+SOCIAL_AUTH_VK_OAUTH2_KEY = '6209814'
+SOCIAL_AUTH_VK_OAUTH2_SECRET = 'uAbLvFawtv71pqU27upk'
+
+# LOGIN_REDIRECT_URL = '/api/v1/'
