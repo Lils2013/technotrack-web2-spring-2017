@@ -1,5 +1,5 @@
 from rest_framework.viewsets import ModelViewSet
-from .serializers import PostSerializer, UserSerializer
+from .serializers import PostSerializer, FullUserSerializer, BasicUserSerializer
 from posts.models import Post
 from .models import User
 from rest_framework import permissions
@@ -22,5 +22,16 @@ class PostViewSet(ModelViewSet):
 
 
 class UserViewSet(ModelViewSet):
-    serializer_class = UserSerializer
+    serializer_class = FullUserSerializer
     queryset = User.objects.all()
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get_serializer_class(self):
+        if 'pk' in self.kwargs:
+            user_id = int(self.kwargs['pk'])
+            if self.request.user.id == user_id:
+                return FullUserSerializer
+        if self.request.user.is_staff:
+            return FullUserSerializer
+        else:
+            return BasicUserSerializer
