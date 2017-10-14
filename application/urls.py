@@ -17,12 +17,17 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from django.conf import settings
 from rest_framework.routers import DefaultRouter
-from core.views import PostViewSet, UserViewSet
+from core.views import UserViewSet
 from rest_framework.authtoken import views
+from events.views import EventViewSet
+from posts.views import PostViewSet
+from subscriptions.views import SubscriptionViewSet
 
 router = DefaultRouter()
-router.register('posts',PostViewSet)
-router.register('users',UserViewSet)
+router.register('posts', PostViewSet)
+router.register('users', UserViewSet)
+router.register('events', EventViewSet)
+router.register('subscriptions', SubscriptionViewSet)
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^api/v1/', include(router.urls)),
@@ -32,6 +37,7 @@ urlpatterns = [
 
 if settings.DEBUG:
     import debug_toolbar
+
     urlpatterns += [
         url(r'^__debug__/', include(debug_toolbar.urls))
     ]
