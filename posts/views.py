@@ -1,5 +1,9 @@
+from rest_framework.decorators import detail_route
 from rest_framework.exceptions import PermissionDenied
+from rest_framework.response import Response
+
 from core.permissions import IsOwnerOrReadOnly
+from likes.serializers import LikeSerializer
 from posts.serializers import PostSerializer
 from posts.models import Post
 from rest_framework.viewsets import ModelViewSet
@@ -39,3 +43,10 @@ class PostViewSet(ModelViewSet):
 
     def perform_create(self, serializer):
         return serializer.save(author=self.request.user)
+
+    @detail_route()
+    def likes(self, request, pk=None):
+        post = self.get_object()
+        likes = post.likes.all()
+        serializer = LikeSerializer(likes, many=True)
+        return Response(serializer.data)

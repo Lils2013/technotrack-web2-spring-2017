@@ -17,9 +17,10 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from django.conf import settings
 from rest_framework.routers import DefaultRouter
-from core.views import UserViewSet
+from core.views import UserViewSet, react
 from rest_framework.authtoken import views
 from events.views import EventViewSet
+from likes.views import LikeViewSet
 from posts.views import PostViewSet
 from subscriptions.views import SubscriptionViewSet
 
@@ -28,11 +29,13 @@ router.register('posts', PostViewSet)
 router.register('users', UserViewSet)
 router.register('events', EventViewSet)
 router.register('subscriptions', SubscriptionViewSet)
+router.register('likes', LikeViewSet)
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^api/v1/', include(router.urls)),
     url(r'^api/token-auth/', views.obtain_auth_token),
-    url(r'^social/', include('social_django.urls', namespace='social'))
+    url(r'^social/', include('social_django.urls', namespace='social')),
+    url(r'^$',react, name='react'),
 ]
 
 if settings.DEBUG:

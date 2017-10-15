@@ -3,6 +3,7 @@ from .serializers import FullUserSerializer, BasicUserSerializer
 from .models import User
 from rest_framework import permissions
 from .permissions import IsUserOrReadOnly
+from django.shortcuts import render_to_response
 
 
 class UserViewSet(ModelViewSet):
@@ -19,3 +20,7 @@ class UserViewSet(ModelViewSet):
             return FullUserSerializer
         else:
             return BasicUserSerializer
+
+
+def react(request):
+    return render_to_response("core/index.html")

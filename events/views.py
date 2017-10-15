@@ -3,7 +3,7 @@ from __future__ import print_function
 from rest_framework.exceptions import PermissionDenied
 from rest_framework.viewsets import ModelViewSet
 from rest_framework import permissions
-from core.permissions import IsUserOrReadOnly, IsOwnerOrReadOnly
+from core.permissions import IsOwnerOrReadOnly
 from events.models import Event
 from events.serializers import EventSerializer
 from subscriptions.models import Subscription
