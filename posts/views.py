@@ -1,7 +1,7 @@
+from django.views.decorators.csrf import csrf_exempt
 from rest_framework.decorators import detail_route
 from rest_framework.exceptions import PermissionDenied
 from rest_framework.response import Response
-
 from core.permissions import IsOwnerOrReadOnly
 from likes.serializers import LikeSerializer
 from posts.serializers import PostSerializer

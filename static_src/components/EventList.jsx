@@ -1,16 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Post from './Post';
+import Event from './Event';
 
 
-class PostList extends React.Component {
+class EventList extends React.Component {
     static propTypes = {
         isLoading: PropTypes.bool,
-        postList: PropTypes.arrayOf(PropTypes.shape(Post.propTypes)),
+        eventList: PropTypes.arrayOf(PropTypes.shape(Event.propTypes)),
     };
 
     static defaultProps = {
-        postList: [],
+        eventList: [],
         isLoading: false,
     };
 
@@ -19,17 +19,17 @@ class PostList extends React.Component {
             return <div className="b-task-list">Загрузка...</div>;
         }
 
-        const posts = this.props.postList.map(
+        const events = this.props.eventList.map(
             item => {
-                return <Post key={ item.id } author={ item.author } text={ item.text } />
+                return <Event key={ item.id } title={ item.title } />
             },
         );
         return (
             <div className="b-task-list">
-                { posts }
+                { events }
             </div>
         );
     }
 }
 
-export default PostList;
+export default EventList;

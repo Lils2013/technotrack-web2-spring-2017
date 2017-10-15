@@ -1,9 +1,11 @@
 from rest_framework import serializers
+
+from core.serializers import BasicUserSerializer
 from events.models import Event
 
 
 class EventSerializer(serializers.ModelSerializer):
-    author = serializers.ReadOnlyField(source='author_id')
+    author = BasicUserSerializer(read_only=True)
 
     class Meta:
         model = Event
