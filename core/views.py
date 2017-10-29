@@ -3,7 +3,7 @@ from .serializers import FullUserSerializer, BasicUserSerializer
 from .models import User
 from rest_framework import permissions
 from .permissions import IsUserOrReadOnly
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, render
 
 
 class UserViewSet(ModelViewSet):
@@ -12,15 +12,15 @@ class UserViewSet(ModelViewSet):
     permission_classes = (permissions.IsAuthenticated, IsUserOrReadOnly)
 
     def get_serializer_class(self):
+        if self.request.user.is_staff:
+            return FullUserSerializer
         if 'pk' in self.kwargs:
             user_id = int(self.kwargs['pk'])
             if self.request.user.id == user_id:
                 return FullUserSerializer
-        if self.request.user.is_staff:
-            return FullUserSerializer
         else:
             return BasicUserSerializer
 
 
 def react(request):
-    return render_to_response("core/index.html")
+    return render(request,"core/index.html")

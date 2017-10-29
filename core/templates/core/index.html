@@ -3,10 +3,12 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Example</title>
+    <title>Exafmple</title>
+
   </head>
 
   <body>
+    {% csrf_token %}
     <div id="root"></div>
     {% render_bundle 'app' %}
   </body>

@@ -11,21 +11,21 @@ from subscriptions.models import Subscription
 
 class EventViewSet(ModelViewSet):
     serializer_class = EventSerializer
-    queryset = Event.objects.all()
+    queryset = Event.objects.all().select_related('author')
     permission_classes = (permissions.IsAuthenticated, IsOwnerOrReadOnly)
 
     def get_queryset(self):
         qs = super(EventViewSet, self).get_queryset()
-        if 'pk' in self.kwargs:
-            pass
-        elif self.request.query_params.get('username'):
+        if self.request.query_params.get('username'):
             if Subscription.objects.filter(author=self.request.user) \
-                    .filter(target__username=self.request.query_params.get('username')):
+                    .filter(target__username=self.request.query_params.get('username')) or self.request.user.username== \
+                    self.request.query_params.get('username'):
                 qs = qs.filter(author__username=self.request.query_params.get('username'))
-            elif self.request.user.username == self.request.query_params.get('username'):
-                qs = qs.filter(author=self.request.user)
             else:
                 raise PermissionDenied('You must be subscribed to view the event list')
         else:
-            qs = qs.filter(author=self.request.user)
+            targets = Subscription.objects.filter(author=self.request.user).values_list('target',flat=True)
+            targets_list = list(targets)
+            targets_list.append(self.request.user)
+            qs = qs.filter(author__in=targets_list)
         return qs

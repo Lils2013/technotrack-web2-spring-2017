@@ -7,7 +7,7 @@ import apiUrls from './../constants/apiUrls';
 import './../styles/base.scss';
 
 const EVENT_LIST = [
-    {id: 0, title: 'event'},
+    {id: 0, title: 'evehhhnt'},
     {id: 1, title: 'e vent'},
     {id: 2, title: 'ev ent'},
     {id: 3, title: 'even t'},
@@ -30,7 +30,7 @@ class App extends React.Component {
             },
         ).then(
             json => {
-                return this.setState({postList: json, isLoading: false})
+                return this.setState({postList: json.reverse(), isLoading: false})
             },
         );
     }
