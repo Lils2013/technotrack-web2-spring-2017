@@ -1,5 +1,6 @@
 import React from 'react';
 import apiUrls from './../constants/apiUrls';
+import './../styles/base.scss';
 
 
 class PostForm extends React.Component {

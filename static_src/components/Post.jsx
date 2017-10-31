@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 class Post extends React.Component {
     static propTypes = {
-        author: PropTypes.string,
+        author: PropTypes.number,
         text: PropTypes.string,
     };
 

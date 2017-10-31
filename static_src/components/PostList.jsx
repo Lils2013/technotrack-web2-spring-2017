@@ -18,7 +18,6 @@ class PostList extends React.Component {
         if (this.props.isLoading) {
             return <div className="b-task-list">Загрузка...</div>;
         }
-
         const posts = this.props.postList.map(
             item => {
                 return <Post key={ item.id } author={ item.author } text={ item.text } />
@@ -26,6 +25,7 @@ class PostList extends React.Component {
         );
         return (
             <div className="b-task-list">
+                <h1>POSTS LIST</h1>
                 { posts }
             </div>
         );
