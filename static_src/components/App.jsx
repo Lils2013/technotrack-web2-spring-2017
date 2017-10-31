@@ -39,10 +39,7 @@ class App extends React.Component {
                 <Link to="/postsform/">To posts form</Link>
                 <Switch>
                     <Route exact path="/" component={() => <h1>MAIN PAGE</h1>}/>
-                    <Route exact path="/posts/" render={
-                        (props) =>
-                        <PostList {...props} isLoading={this.state.isLoading} postList={this.state.postList}/>
-                    }/>
+                    <Route exact path="/posts/" component={PostList}/>
                     <Route exact path="/postsform/" render={
                         (props) =>
                         <PostForm {...props} onCreate={this.onPostCreate}/>

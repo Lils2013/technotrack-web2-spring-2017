@@ -10,7 +10,7 @@ class PostList extends React.Component {
     static propTypes = {
         isLoading: PropTypes.bool,
         postList: PropTypes.arrayOf(PropTypes.shape(Post.propTypes)),
-        loadTasks: PropTypes.func.isRequired,
+        loadPosts: PropTypes.func.isRequired,
     };
 
     static defaultProps = {
@@ -19,7 +19,7 @@ class PostList extends React.Component {
     };
 
     componentDidMount() {
-        this.props.loadTasks(apiUrls.task);
+        this.props.loadPosts(apiUrls.task);
     }
 
     render() {
@@ -40,4 +40,16 @@ class PostList extends React.Component {
     }
 }
 
-export default PostList;
+const mapStateToProps = ({ posts }) => {
+    return {
+        postList: tasks.postList,
+        isLoading: tasks.isLoading,
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({ loadTasks }, dispatch)
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(PostList);
