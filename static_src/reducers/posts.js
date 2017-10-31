@@ -1,10 +1,10 @@
 import update from 'react-addons-update';
-import { START_TASK_LOADING, SUCCESS_TASK_LOADING, ERROR_TASK_LOADING } from './../actions/tasks';
+import { START_POST_LOADING, SUCCESS_POST_LOADING, ERROR_POST_LOADING } from './../actions/posts';
 
 
 const initialState = {
-    taskList: [],
-    tasks: {},
+    postList: [],
+    posts: {},
     isLoading: false,
 };
 
@@ -18,18 +18,18 @@ export default function tasks(store = initialState, action) {
     }
 
     switch (action.type) {
-        case START_TASK_LOADING: {
+        case START_POST_LOADING: {
             return update(newStore, {
                 isLoading: { $set: true },
             });
         }
-        case SUCCESS_TASK_LOADING: {
+        case SUCCESS_POST_LOADING: {
             return update(newStore, {
                 isLoading: { $set: false },
                 taskList: { $set: action.payload.result },
             });
         }
-        case ERROR_TASK_LOADING: {
+        case ERROR_POST_LOADING: {
             return update(newStore, {
                 isLoading: { $set: false },
             });

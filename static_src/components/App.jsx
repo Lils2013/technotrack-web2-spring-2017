@@ -1,50 +1,33 @@
 import React from 'react';
 import PostList from './PostList';
 import PostForm from './PostForm';
-import EventList from './EventList';
-import Navigation from './Navigation'
-import apiUrls from './../constants/apiUrls';
 import './../styles/base.scss';
 import {Link, Route, Switch} from "react-router-dom";
-
-const EVENT_LIST = [
-    {id: 0, title: 'evehhhnt'},
-    {id: 1, title: 'e vent'},
-    {id: 2, title: 'ev ent'},
-    {id: 3, title: 'even t'},
-];
 
 class App extends React.Component {
     state = {
         postList: [],
         isLoading: false,
-        currentPage: 'main',
     };
 
-    componentDidMount() {
-        this.setState({isLoading: true});
-        fetch(apiUrls.post, {
-            credentials: 'include',
-        }).then(
-            body => {
-                return body.json()
-            },
-        ).then(
-            json => {
-                return this.setState({postList: json.reverse(), isLoading: false})
-            },
-        );
-    }
+    // componentDidMount() {
+    //     this.setState({isLoading: true});
+    //     fetch(apiUrls.post, {
+    //         credentials: 'include',
+    //     }).then(
+    //         body => {
+    //             return body.json()
+    //         },
+    //     ).then(
+    //         json => {
+    //             return this.setState({postList: json.reverse(), isLoading: false})
+    //         },
+    //     );
+    // }
 
     onPostCreate = (post) => {
         this.setState({
             postList: [post, ...this.state.postList],
-        });
-    };
-
-    onPageChange = (page) => {
-        this.setState({
-            currentPage: page,
         });
     };
 
@@ -53,12 +36,16 @@ class App extends React.Component {
             <div className="b-wrapper">
                 <Link to="/">To main</Link>
                 <Link to="/posts/">To posts</Link>
+                <Link to="/postsform/">To posts form</Link>
                 <Switch>
                     <Route exact path="/" component={() => <h1>MAIN PAGE</h1>}/>
                     <Route exact path="/posts/" render={
                         (props) =>
-                        /*<PostForm onCreate={this.onPostCreate}/>*/
                         <PostList {...props} isLoading={this.state.isLoading} postList={this.state.postList}/>
+                    }/>
+                    <Route exact path="/postsform/" render={
+                        (props) =>
+                        <PostForm {...props} onCreate={this.onPostCreate}/>
                     }/>
                 </Switch>
                 {/*if (this.state.currentPage === 'posts') {*/}

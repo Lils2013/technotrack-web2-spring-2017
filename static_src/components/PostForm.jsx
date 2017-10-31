@@ -1,6 +1,7 @@
 import React from 'react';
 import apiUrls from './../constants/apiUrls';
 import './../styles/base.scss';
+import {Link} from 'react-router-dom';
 
 
 class PostForm extends React.Component {
@@ -14,11 +15,11 @@ class PostForm extends React.Component {
     };
 
     onClick = (e) => {
-        e.preventDefault();
+        // e.preventDefault();
         if (this.state.isLoading) {
             return;
         }
-        this.setState({isLoading: true});
+        // this.setState({isLoading: true});
         fetch(apiUrls.post, {
             method: 'POST',
             credentials: 'same-origin',
@@ -29,26 +30,28 @@ class PostForm extends React.Component {
             }
         }).then(
             body => body.json(),
-        ).then(
+        )
+            .then(
             (json) => {
-                this.setState({isLoading: false});
+                // this.setState({isLoading: false});
                 return this.props.onCreate(json);
             },
         )
+
     };
 
 
     render() {
         return (
             <div className="b-create-form">
-                <h2>Posts form</h2>
+                <h1>Posts form</h1>
                 <form>
                     <div className="b-form-field-wrapper">
                         <input onChange={this.onChange} value={this.state.text} className="b-form-field" type="text"
                                name="text" placeholder="Text"/>
                     </div>
                     <div className="b-form-field-wrapper">
-                        <button onClick={this.onClick}>Create post</button>
+                        <Link to={"/posts/"} onClick={this.onClick}>Create post</Link>
                     </div>
                 </form>
             </div>
