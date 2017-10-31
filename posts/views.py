@@ -1,4 +1,3 @@
-from django.views.decorators.csrf import csrf_exempt
 from rest_framework.decorators import detail_route
 from rest_framework.exceptions import PermissionDenied
 from rest_framework.response import Response
@@ -18,28 +17,19 @@ class PostViewSet(ModelViewSet):
 
     def get_queryset(self):
         qs = super(PostViewSet, self).get_queryset()
-        if 'pk' in self.kwargs:
-            # post_id = int(self.kwargs['pk'])
-            # post = qs.filter(id=post_id).first()
-            # if Subscription.objects.filter(author=self.request.user) \
-            #         .filter(target=post.author):
-            #     qs = qs.filter(id=post_id)
-            # elif self.request.user == post.author:
-            #     qs = qs.filter(id=post_id)
-            # else:
-            #     raise PermissionDenied('You must be subscribed to view the events')
-            pass
-        elif self.request.query_params.get('username'):
+        if self.request.query_params.get('username'):
             if Subscription.objects.filter(author=self.request.user) \
-                    .filter(target__username=self.request.query_params.get('username')):
+                    .filter(target__username=self.request.query_params.get('username')) or \
+                            self.request.user.username == self.request.query_params.get('username'):
                 qs = qs.filter(author__username=self.request.query_params.get('username'))
-            elif self.request.user.username == self.request.query_params.get('username'):
-                qs = qs.filter(author=self.request.user)
             else:
                 raise PermissionDenied('You must be subscribed to view the post list')
         else:
-            qs = qs.filter(author=self.request.user)
-        return qs
+            targets = Subscription.objects.filter(author=self.request.user).values_list('target', flat=True)
+            targets_list = list(targets)
+            targets_list.append(self.request.user)
+            qs = qs.filter(author__in=targets_list)
+        return qs.order_by('id')
 
     def perform_create(self, serializer):
         return serializer.save(author=self.request.user)

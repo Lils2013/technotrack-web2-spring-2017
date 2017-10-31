@@ -5,7 +5,7 @@ from events.models import Event
 
 
 class EventSerializer(serializers.ModelSerializer):
-    author = BasicUserSerializer(read_only=True)
+    author = serializers.ReadOnlyField(source='author_id')
 
     class Meta:
         model = Event

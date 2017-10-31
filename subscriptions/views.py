@@ -13,7 +13,7 @@ class SubscriptionViewSet(ModelViewSet):
     def get_queryset(self):
         qs = super(SubscriptionViewSet, self).get_queryset()
         qs = qs.filter(target=self.request.user)
-        return qs
+        return qs.order_by('id')
 
     def perform_create(self, serializer):
         return serializer.save(author=self.request.user)

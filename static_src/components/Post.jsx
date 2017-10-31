@@ -3,9 +3,7 @@ import PropTypes from 'prop-types';
 
 class Post extends React.Component {
     static propTypes = {
-        author: PropTypes.shape({
-            username: PropTypes.string,
-        }).isRequired,
+        author: PropTypes.string,
         text: PropTypes.string,
     };
 
@@ -17,7 +15,7 @@ class Post extends React.Component {
         return (
             <div className="b-task">
                 <div className="b-task__title">
-                    <div className="b-user-name">Author: { this.props.author.username }</div>
+                    <div className="b-user-name">Author: { this.props.author }</div>
                 </div>
                 <div className="b-task__content">{ this.props.text }</div>
             </div>

@@ -5,7 +5,7 @@ from posts.models import Post
 
 
 class PostSerializer(serializers.ModelSerializer):
-    author = BasicUserSerializer(read_only=True)
+    author = serializers.ReadOnlyField(source='author_id')
     likes_count = serializers.ReadOnlyField()
     comments_count = serializers.ReadOnlyField()
 

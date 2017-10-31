@@ -18,14 +18,15 @@ class EventViewSet(ModelViewSet):
         qs = super(EventViewSet, self).get_queryset()
         if self.request.query_params.get('username'):
             if Subscription.objects.filter(author=self.request.user) \
-                    .filter(target__username=self.request.query_params.get('username')) or self.request.user.username== \
+                    .filter(target__username=self.request.query_params.get('username')) \
+                    or self.request.user.username == \
                     self.request.query_params.get('username'):
                 qs = qs.filter(author__username=self.request.query_params.get('username'))
             else:
                 raise PermissionDenied('You must be subscribed to view the event list')
         else:
-            targets = Subscription.objects.filter(author=self.request.user).values_list('target',flat=True)
+            targets = Subscription.objects.filter(author=self.request.user).values_list('target', flat=True)
             targets_list = list(targets)
             targets_list.append(self.request.user)
             qs = qs.filter(author__in=targets_list)
-        return qs
+        return qs.order_by('id')
