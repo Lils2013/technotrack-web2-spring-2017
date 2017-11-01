@@ -21,7 +21,7 @@ class Comment(ModelWithAuthor, ModelWithDates, LikeAble, WatchableModel):
     def get_title_for_event(self, eventtype):
         return u'comment ' + str(eventtype.text) + u' was posted on ' +\
                str(eventtype.content_type) + u' ' \
-               + str(eventtype.object_id) + u' by ' + str(eventtype.author.username) + u' at ' + str(self.created)
+               + str(eventtype.object_id) + u' at ' + str(self.created)
 
 
 class CommentAble(models.Model):

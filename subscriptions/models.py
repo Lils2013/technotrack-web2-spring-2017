@@ -13,7 +13,7 @@ class Subscription(ModelWithAuthor, ModelWithDates, WatchableModel):
         return u'Subscription ' + str(self.pk) + u', source: ' + self.author.username + u', target: ' + self.target.username
 
     def get_title_for_event(self, eventtype):
-        return str(eventtype.author.username) + u' has subscribed to  ' + str(eventtype.target.username) \
+        return u' subscribed to  ' + str(eventtype.target.username) \
                + u' at ' + str(self.created)
 
     class Meta:

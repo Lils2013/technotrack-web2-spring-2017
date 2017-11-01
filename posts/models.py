@@ -15,5 +15,4 @@ class Post(ModelWithAuthor, ModelWithDates, LikeAble, CommentAble, WatchableMode
         return u'Post ' + str(self.pk) + u' by ' + self.author.username
 
     def get_title_for_event(self, eventtype):
-        return u'post ' + str(eventtype.text) + u' was posted by ' + str(eventtype.author.username) \
-               + u' at ' + str(self.created)
+        return u'post ' + str(eventtype.text) + u' was posted at ' + str(self.created)

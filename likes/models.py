@@ -19,8 +19,7 @@ class Like(ModelWithDates, ModelWithAuthor, WatchableModel):
 
     def get_title_for_event(self, eventtype):
         return str(eventtype.content_type) + u' ' \
-               + str(eventtype.object_id) + u' was liked by ' + str(eventtype.author.username) \
-               + u' at ' + str(self.created)
+               + str(eventtype.object_id) + u' was liked at ' + str(self.created)
 
 
 class LikeAble(models.Model):
