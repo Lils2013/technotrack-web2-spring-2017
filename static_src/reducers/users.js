@@ -9,11 +9,6 @@ const initialState = {
 
 export default function users(store = initialState, action) {
     let newStore = store;
-    // if (action.payload && action.payload.entities && action.payload.entities.users) {
-    //     newStore = update(store, {
-    //         users: { $merge: action.payload.entities.users },
-    //     });
-    // }
     switch (action.type) {
         case START_USER_LOADING: {
             return newStore

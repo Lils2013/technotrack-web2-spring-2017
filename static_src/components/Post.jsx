@@ -16,10 +16,6 @@ class Post extends React.Component {
     render() {
         return (
             <div className="b-task">
-                <div className="b-task__title">
-                    {/*<div className="b-task__content">{ this.props.created }</div>*/}
-
-                </div>
                 <div className="b-task__content">{ this.props.text }</div>
                 <User id={ this.props.author } />
             </div>

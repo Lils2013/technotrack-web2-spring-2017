@@ -22,8 +22,8 @@ class User extends React.Component {
     render() {
         return (
             <div className="b-task__title">
+                Written by:
                 <div className="b-user-name">{ this.props.username }</div>
-                <div className="b-user-name">{ this.props.first_name }</div>
             </div>
         );
     }
