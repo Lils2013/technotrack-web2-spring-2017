@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import { loadPosts } from './../actions/posts';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
+import {loadPosts} from './../actions/posts';
+import {loadUsers} from './../actions/users';
 import apiUrls from './../constants/apiUrls';
+import Post from './Post'
 
 
 class PostList extends React.Component {
@@ -11,6 +13,7 @@ class PostList extends React.Component {
         isLoading: PropTypes.bool,
         postList: PropTypes.arrayOf(PropTypes.shape(Post.propTypes)),
         loadPosts: PropTypes.func.isRequired,
+        loadUsers: PropTypes.func.isRequired,
     };
 
     static defaultProps = {
@@ -19,7 +22,8 @@ class PostList extends React.Component {
     };
 
     componentDidMount() {
-        this.props.loadPosts(apiUrls.task);
+        this.props.loadPosts(apiUrls.post);
+        this.props.loadUsers(apiUrls.user);
     }
 
     render() {
@@ -28,28 +32,27 @@ class PostList extends React.Component {
         }
         const posts = this.props.postList.map(
             item => {
-                return <Post key={ item.id } author={ item.author } text={ item.text } />
+                return <Post key={item.id} author={item.author} text={item.text} created={item.created}/>
             },
-        );
+        ).reverse();
         return (
             <div className="b-task-list">
                 <h1>POSTS LIST</h1>
-                { posts }
+                {posts}
             </div>
         );
     }
 }
 
-const mapStateToProps = ({ posts }) => {
+const mapStateToProps = ({posts}) => {
     return {
-        postList: tasks.postList,
-        isLoading: tasks.isLoading,
+        postList: posts.postList,
+        isLoading: posts.isLoading,
     }
-}
+};
 
 const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({ loadTasks }, dispatch)
-}
-
+    return bindActionCreators({loadPosts,loadUsers}, dispatch)
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostList);
