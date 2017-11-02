@@ -4,12 +4,11 @@ import { connect } from 'react-redux';
 import apiUrls from "../constants/apiUrls";
 import {bindActionCreators} from "redux";
 import {loadUsers} from "../actions/users";
-import {Link} from 'react-router-dom';
 
 
 class User extends React.Component {
     static propTypes = {
-        id: PropTypes.number.isRequired,
+        id: PropTypes.number,
         first_name: PropTypes.string,
         username: PropTypes.string,
         loadUsers: PropTypes.func.isRequired,
@@ -23,8 +22,8 @@ class User extends React.Component {
     render() {
         return (
             <div className="b-task__title">
-                Written by:
-                <Link to={"/users/" + this.props.id} > {this.props.username} </Link>
+                <h1>PROFILE</h1>
+                <div className="b-user-name">{ this.props.username }</div>
             </div>
         );
     }
@@ -32,7 +31,7 @@ class User extends React.Component {
 
 const mapStateToProps = ({ users }, ownProps) => {
     return {
-        ...users.users[ownProps.id-1],
+        ...users.users[ownProps.match.params.id-1],
     };
 };
 

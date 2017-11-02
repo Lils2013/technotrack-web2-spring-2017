@@ -1,9 +1,9 @@
 import React from 'react';
 import PostForm from './PostForm';
 import EventList from './EventList';
+import Profile from './Profile';
 import './../styles/base.scss';
 import {Link, Route, Switch} from "react-router-dom";
-import {connect} from "react-redux";
 
 class App extends React.Component {
     render() {
@@ -18,6 +18,7 @@ class App extends React.Component {
                     <Route exact path="/" component={() => <h1>MAIN PAGE</h1>}/>
                     <Route exact path="/posts/" component={PostForm}/>
                     <Route exact path="/events/" component={EventList}/>
+                    <Route exact path="/users/:id" component={Profile}/>
                 </Switch>
             </div>
         )
