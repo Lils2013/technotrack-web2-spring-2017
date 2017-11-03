@@ -32,7 +32,8 @@ class PostList extends React.Component {
         }
         const posts = this.props.postList.map(
             item => {
-                return <Post key={item.id} author={item.author} text={item.text} created={item.created}/>
+                return <Post key={item.id} id={item.id} author={item.author} text={item.text} created={item.created}
+                             likes_count={item.likes_count}/>
             },
         ).reverse();
         return (
@@ -52,7 +53,7 @@ const mapStateToProps = ({posts}) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({loadPosts,loadUsers}, dispatch)
+    return bindActionCreators({loadPosts, loadUsers}, dispatch)
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostList);

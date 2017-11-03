@@ -5,6 +5,7 @@ import users from './users';
 import events from "./events";
 import subscribed from "./subscribed";
 import self from "./self";
+import liked from "./liked"
 
 
 export default combineReducers({
@@ -14,4 +15,5 @@ export default combineReducers({
     events,
     subscribed,
     self,
+    liked,
 });

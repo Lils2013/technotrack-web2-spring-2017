@@ -7,7 +7,7 @@ const initialState = {
 };
 
 
-export default function self(store = initialState, action) {
+export default function selfs(store = initialState, action) {
     let newStore = store;
     switch (action.type) {
         case START_SELF_LOADING: {
@@ -15,7 +15,7 @@ export default function self(store = initialState, action) {
         }
         case SUCCESS_SELF_LOADING: {
             return update(newStore, {
-                self: { $set: action.payload },
+                self: {$set: action.payload},
             });
         }
         case ERROR_SELF_LOADING: {
