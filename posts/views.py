@@ -20,7 +20,7 @@ class PostViewSet(ModelViewSet):
         if self.request.query_params.get('username'):
             if Subscription.objects.filter(author=self.request.user) \
                     .filter(target__username=self.request.query_params.get('username')) or \
-                            self.request.user.username == self.request.query_params.get('username'):
+                    self.request.user.username == self.request.query_params.get('username'):
                 qs = qs.filter(author__username=self.request.query_params.get('username'))
             else:
                 raise PermissionDenied('You must be subscribed to view the post list')

@@ -4,6 +4,7 @@ import posts from './posts';
 import users from './users';
 import events from "./events";
 import subscribed from "./subscribed";
+import self from "./self";
 
 
 export default combineReducers({
@@ -12,4 +13,5 @@ export default combineReducers({
     users,
     events,
     subscribed,
+    self,
 });

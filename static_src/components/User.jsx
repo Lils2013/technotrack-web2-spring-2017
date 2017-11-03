@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import apiUrls from "../constants/apiUrls";
 import {bindActionCreators} from "redux";
 import {loadUsers} from "../actions/users";
 import {Link} from 'react-router-dom';

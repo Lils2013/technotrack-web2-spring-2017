@@ -21,6 +21,12 @@ class UserViewSet(ModelViewSet):
         else:
             return BasicUserSerializer
 
+    def get_queryset(self):
+        qs = super(UserViewSet, self).get_queryset()
+        if self.request.query_params.get('self'):
+            qs = qs.filter(id=self.request.user.id)
+        return qs.order_by('id')
+
 
 def react(request):
-    return render(request,"core/index.html")
+    return render(request, "core/index.html")
