@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import {startPostSending, successPostSending} from "../actions/posts";
+import {getCookie} from '../utils/getCookie';
 
 
 class PostForm extends React.Component {
@@ -61,11 +62,6 @@ class PostForm extends React.Component {
 
 }
 
-function getCookie(name) {
-    let value = '; ' + document.cookie;
-    let parts = value.split('; ' + name + '=');
-    if (parts.length === 2) return parts.pop().split(";").shift();
-}
 
 const mapStateToProps = ({posts}) => {
     return {

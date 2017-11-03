@@ -2,12 +2,15 @@ import {CALL_API} from 'redux-api-middleware';
 
 export const START_POST_LOADING = 'START_POST_LOADING';
 export const SUCCESS_POST_LOADING = 'SUCCESS_POST_LOADING';
-export const FINAL_POST_LOADING = 'FINAL_POST_LOADING';
 export const ERROR_POST_LOADING = 'ERROR_POST_LOADING';
 
 export const START_POST_SENDING = 'START_POST_SENDING';
 export const SUCCESS_POST_SENDING = 'SUCCESS_POST_SENDING';
 export const ERROR_POST_SENDING = 'ERROR_POST_SENDING';
+
+export const START_POST_LIKING = 'START_POST_LIKING';
+export const SUCCESS_POST_LIKING = 'SUCCESS_POST_LIKING';
+export const ERROR_POST_LIKING = 'ERROR_POST_LIKING';
 
 
 // export const loadPosts = (url) => {
@@ -22,33 +25,6 @@ export const ERROR_POST_SENDING = 'ERROR_POST_SENDING';
 //         },
 //     };
 // };
-
-export const loadPosts = (url) => {
-    let payload;
-    startPostLoading();
-    fetch(url, {
-        method: 'GET',
-        credentials: 'include',
-    }).then(
-        body => body.json(),
-    ).then(
-        (json) => {
-            console.log(json);
-            payload = json;
-            // successPostLoading(json);
-        },
-    );
-    // return {
-    //     [CALL_API]: {
-    //         credentials: 'include',
-    //         endpoint: url,
-    //         method: 'GET',
-    //         types: [
-    //             START_POST_LOADING, SUCCESS_POST_LOADING, ERROR_POST_LOADING,
-    //         ],
-    //     },
-    // };
-};
 
 export const startPostLoading = () => {
     return {
@@ -91,5 +67,24 @@ export const successPostSending = (newPost) => {
 export const errorPostSending = (newPost) => {
     return {
         type: ERROR_POST_SENDING,
+    };
+};
+
+export const startPostLiking = () => {
+    return {
+        type: START_POST_LIKING,
+    };
+};
+
+export const successPostLiking = (newPost) => {
+    return {
+        type: SUCCESS_POST_LIKING,
+        payload: newPost,
+    };
+};
+
+export const errorPostLiking = (newPost) => {
+    return {
+        type: ERROR_POST_LIKING,
     };
 };

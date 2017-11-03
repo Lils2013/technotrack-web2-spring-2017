@@ -5,6 +5,8 @@ import {connect} from 'react-redux';
 import User from "./User";
 import {loadLiked} from "../actions/liked";
 import apiUrls from "../constants/apiUrls";
+import {startPostLiking, successPostLiking} from '../actions/posts';
+import {getCookie} from '../utils/getCookie';
 
 class Post extends React.Component {
     static propTypes = {
@@ -14,7 +16,6 @@ class Post extends React.Component {
         created: PropTypes.string,
         likes_count: PropTypes.number,
         liked: PropTypes.bool,
-        // loadLiked: PropTypes.func.isRequired,
     };
 
     static defaultProps = {
@@ -23,29 +24,27 @@ class Post extends React.Component {
         liked: false,
     };
 
-    // componentDidMount() {
-    //     this.props.loadLiked(apiUrls.liked_1 + this.props.id + apiUrls.liked_2);
-    // }
-
-    // onClick = (e) => {
-    //     e.preventDefault();
-    //     this.props.startPostSending();
-    //     fetch(apiUrls.post, {
-    //         method: 'POST',
-    //         credentials: 'same-origin',
-    //         body: JSON.stringify(this.getInputValue()),
-    //         headers: {
-    //             'X-CSRFToken': getCookie('csrftoken'),
-    //             'content-type': 'application/json',
-    //         }
-    //     }).then(
-    //         body => body.json(),
-    //     ).then(
-    //         (json) => {
-    //             this.props.successPostSending(json);
-    //         },
-    //     )
-    // };
+    onClick = (e) => {
+        e.preventDefault();
+        if (this.props.liked) {
+            return;
+        }
+        this.props.startPostLiking();
+        fetch(apiUrls.liked_1 + this.props.id + apiUrls.liked_3, {
+            method: 'POST',
+            credentials: 'same-origin',
+            headers: {
+                'X-CSRFToken': getCookie('csrftoken'),
+                'content-type': 'application/json',
+            }
+        }).then(
+            body => body.json(),
+        ).then(
+            (json) => {
+                this.props.successPostLiking(json);
+            },
+        )
+    };
 
     render() {
         let img_src = null;
@@ -58,24 +57,21 @@ class Post extends React.Component {
             <div className="b-task">
                 <div className="b-task__content">{this.props.text}</div>
                 <h4>Written by: <User id={this.props.author}/></h4>
-                <img className="b-image"
+                <img onClick={this.onClick} className="b-image"
                      src={img_src}/> {this.props.likes_count}
             </div>
         )
     }
 }
 
-// const mapStateToProps = ({liked},ownProps) => {
-//     console.log(liked.liked[1]);
-//     return {
-//         ...ownProps,
-//         liked: liked.liked[ownProps-1],
-//     }
-// };
-//
-// const mapDispatchToProps = (dispatch) => {
-//     return bindActionCreators({loadLiked}, dispatch)
-// };
+const mapStateToProps = (ownProps) => {
+    return {
+        ownProps,
+    };
+};
 
-// export default connect(mapStateToProps, mapDispatchToProps)(Post);
-export default Post;
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({ startPostLiking, successPostLiking}, dispatch)
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Post);
