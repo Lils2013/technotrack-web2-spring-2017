@@ -14,7 +14,7 @@ class Post extends React.Component {
         created: PropTypes.string,
         likes_count: PropTypes.number,
         liked: PropTypes.bool,
-        loadLiked: PropTypes.func.isRequired,
+        // loadLiked: PropTypes.func.isRequired,
     };
 
     static defaultProps = {
@@ -23,9 +23,9 @@ class Post extends React.Component {
         liked: false,
     };
 
-    componentDidMount() {
-        this.props.loadLiked(apiUrls.liked_1 + this.props.id + apiUrls.liked_2);
-    }
+    // componentDidMount() {
+    //     this.props.loadLiked(apiUrls.liked_1 + this.props.id + apiUrls.liked_2);
+    // }
 
     // onClick = (e) => {
     //     e.preventDefault();
@@ -48,7 +48,6 @@ class Post extends React.Component {
     // };
 
     render() {
-        console.log(this.props.liked);
         let img_src = null;
         if (this.props.liked) {
             img_src = "https://cdn1.iconfinder.com/data/icons/instagram-ui-colored/48/JD-07-32.png";
@@ -66,16 +65,17 @@ class Post extends React.Component {
     }
 }
 
-const mapStateToProps = ({liked},ownProps) => {
-    console.log(liked.liked[1]);
-    return {
-        ...ownProps,
-        liked: liked.liked[ownProps-1],
-    }
-};
+// const mapStateToProps = ({liked},ownProps) => {
+//     console.log(liked.liked[1]);
+//     return {
+//         ...ownProps,
+//         liked: liked.liked[ownProps-1],
+//     }
+// };
+//
+// const mapDispatchToProps = (dispatch) => {
+//     return bindActionCreators({loadLiked}, dispatch)
+// };
 
-const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({loadLiked}, dispatch)
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Post);
+// export default connect(mapStateToProps, mapDispatchToProps)(Post);
+export default Post;

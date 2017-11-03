@@ -2,17 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {loadPosts} from './../actions/posts';
 import {loadUsers} from './../actions/users';
 import apiUrls from './../constants/apiUrls';
 import Post from './Post'
+import {startPostLoading, successPostLoading} from '../actions/posts';
 
 
 class PostList extends React.Component {
     static propTypes = {
         isLoading: PropTypes.bool,
         postList: PropTypes.arrayOf(PropTypes.shape(Post.propTypes)),
-        loadPosts: PropTypes.func.isRequired,
         loadUsers: PropTypes.func.isRequired,
     };
 
@@ -22,8 +21,31 @@ class PostList extends React.Component {
     };
 
     componentDidMount() {
-        this.props.loadPosts(apiUrls.post);
         this.props.loadUsers(apiUrls.user);
+        let payload;
+        this.props.startPostLoading();
+        fetch(apiUrls.post, {
+            method: 'GET',
+            credentials: 'include',
+        }).then(
+            body => body.json(),
+        ).then(
+            (json) => {
+                const lol = json.map(item => {
+                    fetch(apiUrls.liked_1 + item.id + apiUrls.liked_2, {
+                        method: 'GET',
+                        credentials: 'include',
+                    }).then(
+                        body => body.json(),
+                    ).then(
+                        (json) => {
+                            item['liked'] = json.liked;
+                            this.props.successPostLoading(item);
+                        },
+                    );
+                },);
+            },
+        );
     }
 
     render() {
@@ -32,8 +54,9 @@ class PostList extends React.Component {
         }
         const posts = this.props.postList.map(
             item => {
+                // console.log(item);
                 return <Post key={item.id} id={item.id} author={item.author} text={item.text} created={item.created}
-                             likes_count={item.likes_count}/>
+                             likes_count={item.likes_count} liked={item.liked}/>
             },
         ).reverse();
         return (
@@ -53,7 +76,7 @@ const mapStateToProps = ({posts}) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({loadPosts, loadUsers}, dispatch)
+    return bindActionCreators({startPostLoading, successPostLoading, loadUsers}, dispatch)
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostList);
