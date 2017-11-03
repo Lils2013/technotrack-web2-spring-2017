@@ -1,5 +1,6 @@
 export default {
     post: '/api/v1/posts/',
     user: '/api/v1/users/',
-    event: '/api/v1/events/'
+    event: '/api/v1/events/',
+    subscribed: '/api/v1/subscriptions/'
 };

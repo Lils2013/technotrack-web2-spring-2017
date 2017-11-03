@@ -10,9 +10,7 @@ class App extends React.Component {
         return (
             <div className="b-wrapper">
                 <Link to="/">To main</Link>
-
                 <Link to="/posts/">To posts</Link>
-
                 <Link to="/events/">To events</Link>
                 <Switch>
                     <Route exact path="/" component={() => <h1>MAIN PAGE</h1>}/>

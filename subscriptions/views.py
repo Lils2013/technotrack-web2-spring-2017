@@ -10,9 +10,17 @@ class SubscriptionViewSet(ModelViewSet):
     queryset = Subscription.objects.all()
     permission_classes = (permissions.IsAuthenticated, IsOwnerOrReadOnly)
 
+    # def get_queryset(self):
+    #     qs = super(SubscriptionViewSet, self).get_queryset()
+    #     qs = qs.filter(author=self.request.user)
+    #     return qs.order_by('id')
+
     def get_queryset(self):
         qs = super(SubscriptionViewSet, self).get_queryset()
-        qs = qs.filter(target=self.request.user)
+        if self.request.query_params.get('username'):
+            qs = qs.filter(author__username=self.request.query_params.get('username'))
+        else:
+            qs = qs.filter(author=self.request.user)
         return qs.order_by('id')
 
     def perform_create(self, serializer):

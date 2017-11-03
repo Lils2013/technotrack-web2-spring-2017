@@ -7,5 +7,5 @@ class SubscriptionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Subscription
-        fields = ('created', 'author', 'target')
+        fields = ('id', 'created', 'author', 'target')
         # fields = '__all__'

@@ -16,7 +16,7 @@ class Event extends React.Component {
         return (
             <div className="b-task">
                 <div className="b-task__content">{ this.props.title }</div>
-                <User id={ this.props.author } />
+                <h4>Written by: <User id={ this.props.author } /></h4>
             </div>
         );
     }

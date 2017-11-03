@@ -23,7 +23,6 @@ class User extends React.Component {
     render() {
         return (
             <div className="b-task__title">
-                Written by:
                 <Link to={"/users/" + this.props.id} > {this.props.username} </Link>
             </div>
         );

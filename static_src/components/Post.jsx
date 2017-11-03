@@ -17,7 +17,7 @@ class Post extends React.Component {
         return (
             <div className="b-task">
                 <div className="b-task__content">{ this.props.text }</div>
-                <User id={ this.props.author } />
+                <h4>Written by: <User id={ this.props.author } /></h4>
             </div>
         );
     }
