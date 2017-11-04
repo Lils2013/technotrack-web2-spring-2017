@@ -43,11 +43,10 @@ class PostViewSet(ModelViewSet):
                                        author=request.user)
         if self.request.query_params.get('self'):
             if old_like:
-                return Response({'liked': True, 'id': pk})
+                return Response({'liked': True, 'id': int(pk), 'liked_id': old_like.get().id})
             else:
-                return Response({'liked': False, 'id': pk})
+                return Response({'liked': False, 'id': int(pk), 'liked_id': 0})
         if request.method == 'POST':
-
             if old_like:
                 serializer = LikeSerializer(old_like.get())
                 return Response(serializer.data)

@@ -3,9 +3,8 @@ import PropTypes from 'prop-types';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import User from "./User";
-import {loadLiked} from "../actions/liked";
 import apiUrls from "../constants/apiUrls";
-import {startPostLiking, successPostLiking} from '../actions/posts';
+import {startPostLiking, startPostUnliking, successPostLiking, successPostUnliking} from '../actions/posts';
 import {getCookie} from '../utils/getCookie';
 
 class Post extends React.Component {
@@ -16,6 +15,7 @@ class Post extends React.Component {
         created: PropTypes.string,
         likes_count: PropTypes.number,
         liked: PropTypes.bool,
+        liked_id: PropTypes.number,
     };
 
     static defaultProps = {
@@ -25,25 +25,33 @@ class Post extends React.Component {
     };
 
     onClick = (e) => {
-        e.preventDefault();
         if (this.props.liked) {
-            return;
+            this.props.startPostUnliking(this.props.id);
+            fetch(apiUrls.unlike + this.props.liked_id, {
+                method: 'DELETE',
+                credentials: 'same-origin',
+                headers: {
+                    'X-CSRFToken': getCookie('csrftoken'),
+                    'content-type': 'application/json',
+                }
+            });
+        } else {
+            this.props.startPostLiking();
+            fetch(apiUrls.liked_1 + this.props.id + apiUrls.liked_3, {
+                method: 'POST',
+                credentials: 'same-origin',
+                headers: {
+                    'X-CSRFToken': getCookie('csrftoken'),
+                    'content-type': 'application/json',
+                }
+            }).then(
+                body => body.json(),
+            ).then(
+                (json) => {
+                    this.props.successPostLiking(json);
+                },
+            )
         }
-        this.props.startPostLiking();
-        fetch(apiUrls.liked_1 + this.props.id + apiUrls.liked_3, {
-            method: 'POST',
-            credentials: 'same-origin',
-            headers: {
-                'X-CSRFToken': getCookie('csrftoken'),
-                'content-type': 'application/json',
-            }
-        }).then(
-            body => body.json(),
-        ).then(
-            (json) => {
-                this.props.successPostLiking(json);
-            },
-        )
     };
 
     render() {
@@ -71,7 +79,7 @@ const mapStateToProps = (ownProps) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({ startPostLiking, successPostLiking}, dispatch)
+    return bindActionCreators({ startPostLiking, successPostLiking, startPostUnliking, successPostUnliking}, dispatch)
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Post);

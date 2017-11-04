@@ -7,4 +7,5 @@ export default {
     liked_1: '/api/v1/posts/',
     liked_2: '/likes/?self=true',
     liked_3: '/likes/',
+    unlike: '/api/v1/likes/',
 };

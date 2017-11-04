@@ -11,7 +11,6 @@ class User extends React.Component {
         id: PropTypes.number.isRequired,
         first_name: PropTypes.string,
         username: PropTypes.string,
-        loadUsers: PropTypes.func.isRequired,
     };
 
     static defaultProps = {
@@ -34,8 +33,8 @@ const mapStateToProps = ({ users }, ownProps) => {
     };
 };
 
-const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({loadUsers}, dispatch)
-};
+// const mapDispatchToProps = (dispatch) => {
+//     return bindActionCreators({loadUsers}, dispatch)
+// };
 
-export default connect(mapStateToProps, mapDispatchToProps)(User);
+export default connect(mapStateToProps)(User);

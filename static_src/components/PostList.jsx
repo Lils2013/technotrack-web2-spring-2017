@@ -31,7 +31,7 @@ class PostList extends React.Component {
             body => body.json(),
         ).then(
             (json) => {
-                const lol = json.map(item => {
+                const lol = json.reverse().map(item => {
                     fetch(apiUrls.liked_1 + item.id + apiUrls.liked_2, {
                         method: 'GET',
                         credentials: 'include',
@@ -40,6 +40,7 @@ class PostList extends React.Component {
                     ).then(
                         (json) => {
                             item['liked'] = json.liked;
+                            item['liked_id']=json.liked_id;
                             this.props.successPostLoading(item);
                         },
                     );
@@ -52,12 +53,18 @@ class PostList extends React.Component {
         if (this.props.isLoading) {
             return <div className="b-task-list">Загрузка...</div>;
         }
-        const posts = this.props.postList.map(
+        const posts = this.props.postList.sort((first, second) => {
+            if (first.id > second.id) {
+                return -1;
+            } else {
+                return 1;
+            }
+        }).map(
             item => {
                 return <Post key={item.id} id={item.id} author={item.author} text={item.text} created={item.created}
-                             likes_count={item.likes_count} liked={item.liked}/>
+                             likes_count={item.likes_count} liked={item.liked} liked_id={item.liked_id}/>
             },
-        ).reverse();
+        );
         return (
             <div className="b-task-list">
                 <h1>POSTS LIST</h1>

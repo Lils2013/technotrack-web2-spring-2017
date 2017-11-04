@@ -12,6 +12,10 @@ export const START_POST_LIKING = 'START_POST_LIKING';
 export const SUCCESS_POST_LIKING = 'SUCCESS_POST_LIKING';
 export const ERROR_POST_LIKING = 'ERROR_POST_LIKING';
 
+export const START_POST_UNLIKING = 'START_POST_UNLIKING';
+export const SUCCESS_POST_UNLIKING = 'SUCCESS_POST_UNLIKING';
+export const ERROR_POST_UNLIKING = 'ERROR_POST_UNLIKING';
+
 
 // export const loadPosts = (url) => {
 //     return {
@@ -45,12 +49,6 @@ export const errorPostLoading = () => {
     };
 };
 
-export const finalPostLoading = () => {
-    return {
-        type: FINAL_POST_LOADING,
-    };
-};
-
 export const startPostSending = () => {
     return {
         type: START_POST_SENDING,
@@ -64,7 +62,7 @@ export const successPostSending = (newPost) => {
     };
 };
 
-export const errorPostSending = (newPost) => {
+export const errorPostSending = () => {
     return {
         type: ERROR_POST_SENDING,
     };
@@ -83,8 +81,28 @@ export const successPostLiking = (newPost) => {
     };
 };
 
-export const errorPostLiking = (newPost) => {
+export const errorPostLiking = () => {
     return {
         type: ERROR_POST_LIKING,
     };
 };
+
+export const startPostUnliking = (del) => {
+    return {
+        type: START_POST_UNLIKING,
+        payload: del,
+    };
+};
+
+export const successPostUnliking = () => {
+    return {
+        type: SUCCESS_POST_UNLIKING,
+    };
+};
+
+export const errorPostUnliking = () => {
+    return {
+        type: ERROR_POST_UNLIKING,
+    };
+};
+
