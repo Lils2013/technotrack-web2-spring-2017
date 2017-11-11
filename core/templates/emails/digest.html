@@ -1,0 +1,15 @@
+{% extends "emails/email.html" %}
+
+{% block content %}
+<h1>Digest</h1>
+HERE IS A NICE DIGEST,THESE POSTS WERE POSTED
+<ul>
+{% for post in posts %}
+    <li>{{ post }}</li>
+{% endfor %}
+    </ul>
+{% endblock %}
+
+{% block image %}
+<img src="{{ spirit }}"/>
+{% endblock %}

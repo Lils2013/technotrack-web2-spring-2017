@@ -6,11 +6,19 @@ from templated_email import InlineImage
 from django.template.loader import render_to_string
 
 
-def send_mail(subject, text, to):
-    email = EmailMultiAlternatives(subject, text, 'noreply@cool.com', to)
+def send_mail(subject, like, to):
+    email = EmailMultiAlternatives(subject, like, 'noreply@cool.com', to)
     pic = InlineImage('spirit.jpg', open(u'C:\spirit.jpg', 'rb').read(), subtype='jpeg')
     pic.attach_to_message(email)
-    html = render_to_string('emails/welcome_letter.html', {'spirit': pic, 'cool': text})
-    html = html.replace('%haha%', str(pic))
+    html = render_to_string('emails/liked.html', {'spirit': pic, 'cool': like})
+    email.attach_alternative(html, 'text/html')
+    email.send()
+
+
+def send_digest(subject, posts, to):
+    email = EmailMultiAlternatives(subject, str(posts), 'noreply@cool.com', to)
+    pic = InlineImage('spirit.jpg', open(u'C:\spirit.jpg', 'rb').read(), subtype='jpeg')
+    pic.attach_to_message(email)
+    html = render_to_string('emails/digest.html', {'spirit': pic, 'posts': posts})
     email.attach_alternative(html, 'text/html')
     email.send()

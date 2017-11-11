@@ -10,6 +10,7 @@ from likes.models import LikeAble
 
 class Post(ModelWithAuthor, ModelWithDates, LikeAble, CommentAble, WatchableModel):
     text = models.CharField(max_length=255)
+    report_sent = models.BooleanField(default=False)
 
     def __unicode__(self):
         return u'Post ' + str(self.pk) + u' by ' + self.author.username
