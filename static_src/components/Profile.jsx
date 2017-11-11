@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {bindActionCreators} from "redux";
-import apiUrls from "../constants/apiUrls";
-import User from "./User"
-import {loadSubscribed} from "../actions/subscribed";
+import {bindActionCreators} from 'redux';
+import apiUrls from '../constants/apiUrls';
+import User from './User'
+import {loadSubscribed} from '../actions/subscribed';
 
 
 class Profile extends React.Component {
@@ -24,12 +24,12 @@ class Profile extends React.Component {
     };
 
     componentDidMount() {
-        this.props.loadSubscribed(apiUrls.subscribed + "?username=" + this.props.username);
+        this.props.loadSubscribed(apiUrls.subscribed + '?username=' + this.props.username);
     }
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.id !== this.props.id) {
-            this.props.loadSubscribed(apiUrls.subscribed + "?username=" + nextProps.username);
+            this.props.loadSubscribed(apiUrls.subscribed + '?username=' + nextProps.username);
         }
     }
 
@@ -41,7 +41,7 @@ class Profile extends React.Component {
             item => {
                 return <User key={item.target} id={item.target}/>
             },
-        ).reverse();
+        );
         return (
             <div>
                 <h1>PROFILE</h1>
