@@ -15,8 +15,8 @@ def post_liked(text, email):
     send_mail('Your post was liked!!', text, [email, ])
 
 
-@periodic_task(run_every=crontab(minute='0,5,10,15,20,25,30,35,40,45,50,55'))
-# @periodic_task(run_every=crontab(minute='*'))
+# @periodic_task(run_every=crontab(minute='0,5,10,15,20,25,30,35,40,45,50,55'))
+@periodic_task(run_every=crontab(minute='*'))
 def post_periodic():
     posts_to_report_sent = set()
     for user in User.objects.all():

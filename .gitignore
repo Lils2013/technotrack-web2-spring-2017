@@ -5,3 +5,6 @@ webpack-examples
 node_modules
 webpack-stats.json
 static
+application/whoosh_index
+celerybeat.pid
+celerybeat-schedule

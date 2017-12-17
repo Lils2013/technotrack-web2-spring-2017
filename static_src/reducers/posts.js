@@ -26,19 +26,18 @@ export default function posts(store = initialState, action) {
     switch (action.type) {
         case START_POST_LOADING: {
             return update(newStore, {
-                postList: {$set: []},
-                isLoading: {$set: true},
+                isLoading: { $set: true },
             });
         }
         case SUCCESS_POST_LOADING: {
             return update(newStore, {
-                isLoading: {$set: false},
-                postList: {$set: [...store.postList, action.payload]},
+                isLoading: { $set: false },
+                postList: { $set: action.payload },
             });
         }
         case ERROR_POST_LOADING: {
             return update(newStore, {
-                isLoading: {$set: false},
+                isLoading: { $set: false },
             });
         }
         case START_POST_SENDING: {
@@ -91,7 +90,7 @@ export default function posts(store = initialState, action) {
             });
         }
         case SUCCESS_POST_UNLIKING: {
-            newStore;
+            return newStore;
         }
         case ERROR_POST_UNLIKING: {
             return newStore;

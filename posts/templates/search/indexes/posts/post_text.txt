@@ -1,0 +1,4 @@
+{{ object.text }}
+{{ object.author.username }}
+{{ object.author.first_name }}
+{{ object.author.last_name }}

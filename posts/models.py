@@ -13,7 +13,7 @@ class Post(ModelWithAuthor, ModelWithDates, LikeAble, CommentAble, WatchableMode
     report_sent = models.BooleanField(default=False)
 
     def __unicode__(self):
-        return u'Post ' + str(self.pk) + u' by ' + self.author.username
+        return u'Post ' + str(self.pk) + u' by ' + self.author.username + u': ' + self.text
 
     def get_title_for_event(self, eventtype):
         return u'post ' + str(eventtype.text) + u' was posted at ' + str(self.created)

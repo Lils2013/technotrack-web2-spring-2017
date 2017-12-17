@@ -17,37 +17,37 @@ export const SUCCESS_POST_UNLIKING = 'SUCCESS_POST_UNLIKING';
 export const ERROR_POST_UNLIKING = 'ERROR_POST_UNLIKING';
 
 
-// export const loadPosts = (url) => {
+export const loadPosts = (url) => {
+    return {
+        [CALL_API]: {
+            credentials: 'include',
+            endpoint: url,
+            method: 'GET',
+            types: [
+                START_POST_LOADING, SUCCESS_POST_LOADING, ERROR_POST_LOADING,
+            ],
+        },
+    };
+};
+
+// export const startPostLoading = () => {
 //     return {
-//         [CALL_API]: {
-//             credentials: 'include',
-//             endpoint: url,
-//             method: 'GET',
-//             types: [
-//                 START_POST_LOADING, SUCCESS_POST_LOADING, ERROR_POST_LOADING,
-//             ],
-//         },
+//         type: START_POST_LOADING,
 //     };
 // };
-
-export const startPostLoading = () => {
-    return {
-        type: START_POST_LOADING,
-    };
-};
-
-export const successPostLoading = (newPost) => {
-    return {
-        type: SUCCESS_POST_LOADING,
-        payload: newPost,
-    };
-};
-
-export const errorPostLoading = () => {
-    return {
-        type: ERROR_POST_LOADING,
-    };
-};
+//
+// export const successPostLoading = (newPost) => {
+//     return {
+//         type: SUCCESS_POST_LOADING,
+//         payload: newPost,
+//     };
+// };
+//
+// export const errorPostLoading = () => {
+//     return {
+//         type: ERROR_POST_LOADING,
+//     };
+// };
 
 export const startPostSending = () => {
     return {

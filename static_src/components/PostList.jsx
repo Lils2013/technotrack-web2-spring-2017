@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import {loadUsers} from './../actions/users';
 import apiUrls from './../constants/apiUrls';
 import Post from './Post'
-import {startPostLoading, successPostLoading} from '../actions/posts';
+import {loadPosts} from '../actions/posts';
 
 
 class PostList extends React.Component {
@@ -21,32 +21,8 @@ class PostList extends React.Component {
     };
 
     componentDidMount() {
+        this.props.loadPosts(apiUrls.post);
         this.props.loadUsers(apiUrls.user);
-        let payload;
-        this.props.startPostLoading();
-        fetch(apiUrls.post, {
-            method: 'GET',
-            credentials: 'include',
-        }).then(
-            body => body.json(),
-        ).then(
-            (json) => {
-                const lol = json.reverse().map(item => {
-                    fetch(apiUrls.liked_1 + item.id + apiUrls.liked_2, {
-                        method: 'GET',
-                        credentials: 'include',
-                    }).then(
-                        body => body.json(),
-                    ).then(
-                        (json) => {
-                            item['liked'] = json.liked;
-                            item['liked_id']=json.liked_id;
-                            this.props.successPostLoading(item);
-                        },
-                    );
-                },);
-            },
-        );
     }
 
     render() {
@@ -65,6 +41,7 @@ class PostList extends React.Component {
                              likes_count={item.likes_count} liked={item.liked} liked_id={item.liked_id}/>
             },
         );
+        console.log(posts);
         return (
             <div className="b-task-list">
                 <h1>POSTS LIST</h1>
@@ -82,7 +59,7 @@ const mapStateToProps = ({posts}) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({startPostLoading, successPostLoading, loadUsers}, dispatch)
+    return bindActionCreators({loadPosts, loadUsers}, dispatch)
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostList);

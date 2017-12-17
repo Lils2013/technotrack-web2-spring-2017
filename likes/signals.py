@@ -8,7 +8,7 @@ def like_postsave(instance, created=False, *args, **kwargs):
     instance.object.likes_count = instance.object.likes.count()
     instance.object.save()
     if instance.author.id != instance.object.author.id:
-        post_liked.apply_async([str(instance.object)+': '+str(instance.object.text),instance.author.email,])
+        post_liked.apply_async([str(instance.object)+': '+str(instance.object.text),instance.object.author.email,])
 
 
 def like_postdelete(instance, created=False, *args, **kwargs):

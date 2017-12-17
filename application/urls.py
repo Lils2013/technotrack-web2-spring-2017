@@ -36,6 +36,7 @@ urlpatterns = [
     url(r'^api/token-auth/', views.obtain_auth_token),
     url(r'^social/', include('social_django.urls', namespace='social')),
     url(r'^$',react, name='react'),
+    url(r'^search/', include('haystack.urls')),
 ]
 
 if settings.DEBUG:
